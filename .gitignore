@@ -1,0 +1,10 @@
+
+*/.vs
+*/.vscode
+*/Binaries
+*/DerivedDataCache
+*/Intermediate
+*/Saved
+*/**.sln
+*/**.vcxproj
+*/**.vcxproj.**
