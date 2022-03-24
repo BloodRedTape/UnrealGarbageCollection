@@ -14,11 +14,13 @@ void APipePair::BeginPlay(){
 	FBox PipeTopBox = PipeTop->GetBoundingBox();
 	FVector PipeTopSize = PipeTopBox.Max - PipeTopBox.Min;
 
+	HoleOffset = FMath::RandRange(PipeTopSize.Z, PairHeight - PipeTopSize.Z - HoleSize);
+
 	float BottomTopHeight = PipeTopSize.Z;
 	float BottomBaseHeight = HoleOffset - BottomTopHeight;
 	float BottomBaseScale = BottomBaseHeight/PipeBaseSize.Z;
 	float TopTopHeight = PipeTopSize.Z;
-	float TopBaseHeight = PairHeight - TopTopHeight - PairHole - BottomTopHeight - BottomBaseHeight;
+	float TopBaseHeight = PairHeight - TopTopHeight - HoleSize - BottomTopHeight - BottomBaseHeight;
 	float TopBaseScale = TopBaseHeight/PipeBaseSize.Z;
 
 	UStaticMeshComponent *BottomBase = AddSceneComponent<UStaticMeshComponent>(RootComponent);
@@ -31,12 +33,12 @@ void APipePair::BeginPlay(){
 	BottomTop->SetStaticMesh(PipeTop);
 
 	UStaticMeshComponent *TopTop = AddSceneComponent<UStaticMeshComponent>(RootComponent);
-	TopTop->SetRelativeLocation({0.f, 0.f, HoleOffset + PairHole - PipeTopBox.Min.Z});
+	TopTop->SetRelativeLocation({0.f, 0.f, HoleOffset + HoleSize - PipeTopBox.Min.Z});
 	TopTop->SetStaticMesh(PipeTop);
 
 	UStaticMeshComponent *TopBase = AddSceneComponent<UStaticMeshComponent>(RootComponent);
 	TopBase->SetRelativeScale3D({1.f, 1.f, TopBaseScale});
-	TopBase->SetRelativeLocation({0.f, 0.f, HoleOffset + PairHole + TopTopHeight - PipeBaseBox.Min.Z*TopBaseScale});
+	TopBase->SetRelativeLocation({0.f, 0.f, HoleOffset + HoleSize + TopTopHeight - PipeBaseBox.Min.Z*TopBaseScale});
 	TopBase->SetStaticMesh(PipeBase);
 }
 

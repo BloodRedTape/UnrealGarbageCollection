@@ -16,10 +16,9 @@ private:
 	float PairHeight = 800;
 
 	UPROPERTY(EditAnywhere, Category="Visuals")
-	float PairHole = 200;
+	float HoleSize = 200;
 
-	UPROPERTY(EditAnywhere, Category="Visuals")
-	float HoleOffset = 300;
+	float HoleOffset;
 
 	UPROPERTY(EditAnywhere, Category="Visuals")
 	UStaticMesh *PipeBase = nullptr;
@@ -28,7 +27,7 @@ private:
 	UStaticMesh *PipeTop = nullptr;
 public:
 	APipePair();
-
+	
 	virtual void BeginPlay() override;
 
 	virtual void Tick(float DeltaTime) override;
