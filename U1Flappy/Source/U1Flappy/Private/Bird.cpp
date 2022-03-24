@@ -17,10 +17,10 @@ void ABird::BeginPlay(){
 void ABird::Tick(float DeltaTime){
 	Super::Tick(DeltaTime);
 
-	m_Velocity += m_Gravity * DeltaTime;
+	Velocity += Gravity * DeltaTime;
 
 	FVector Location = GetActorLocation();
-	Location.Z += m_Velocity;
+	Location.Z += Velocity;
 	SetActorLocation(Location);
 }
 
@@ -31,9 +31,10 @@ void ABird::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent){
 }
 
 void ABird::AddForce(float Force){
-	m_Velocity += Force / m_Mass;
+	Velocity += Force / Mass;
 }
 
 void ABird::OnJump(){
-	AddForce(m_JumpForce);
+	Velocity *= 0.5;
+	AddForce(JumpForce);
 }
