@@ -23,23 +23,31 @@ void APipePair::BeginPlay(){
 	float TopBaseHeight = PairHeight - TopTopHeight - HoleSize - BottomTopHeight - BottomBaseHeight;
 	float TopBaseScale = TopBaseHeight/PipeBaseSize.Z;
 
-	UStaticMeshComponent *BottomBase = AddSceneComponent<UStaticMeshComponent>(RootComponent);
+	BottomBase = AddSceneComponent<UStaticMeshComponent>(RootComponent);
 	BottomBase->SetRelativeScale3D({1.f, 1.f, BottomBaseScale});
 	BottomBase->SetRelativeLocation({0.f, 0.f, -PipeBaseBox.Min.Z * BottomBaseScale});
 	BottomBase->SetStaticMesh(PipeBase);
 
-	UStaticMeshComponent *BottomTop = AddSceneComponent<UStaticMeshComponent>(RootComponent);
+	BottomBase->SetCollisionProfileName(TEXT("OverlapAll"));
+
+	BottomTop = AddSceneComponent<UStaticMeshComponent>(RootComponent);
 	BottomTop->SetRelativeLocation({0.f, 0.f, BottomBaseHeight - PipeTopBox.Min.Z});
 	BottomTop->SetStaticMesh(PipeTop);
 
-	UStaticMeshComponent *TopTop = AddSceneComponent<UStaticMeshComponent>(RootComponent);
+	BottomTop->SetCollisionProfileName(TEXT("OverlapAll"));
+
+	TopTop = AddSceneComponent<UStaticMeshComponent>(RootComponent);
 	TopTop->SetRelativeLocation({0.f, 0.f, HoleOffset + HoleSize - PipeTopBox.Min.Z});
 	TopTop->SetStaticMesh(PipeTop);
 
-	UStaticMeshComponent *TopBase = AddSceneComponent<UStaticMeshComponent>(RootComponent);
+	TopTop->SetCollisionProfileName(TEXT("OverlapAll"));
+
+	TopBase = AddSceneComponent<UStaticMeshComponent>(RootComponent);
 	TopBase->SetRelativeScale3D({1.f, 1.f, TopBaseScale});
 	TopBase->SetRelativeLocation({0.f, 0.f, HoleOffset + HoleSize + TopTopHeight - PipeBaseBox.Min.Z*TopBaseScale});
 	TopBase->SetStaticMesh(PipeBase);
+
+	TopBase->SetCollisionProfileName(TEXT("OverlapAll"));
 }
 
 void APipePair::Tick(float DeltaTime){

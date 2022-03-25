@@ -25,6 +25,15 @@ private:
 
 	UPROPERTY(EditAnywhere, Category="Visuals")
 	UStaticMesh *PipeTop = nullptr;
+
+	UPROPERTY(EditAnywhere, Category="Collide")
+	UStaticMeshComponent *BottomBase = nullptr;
+	UPROPERTY(EditAnywhere, Category="Collide")
+	UStaticMeshComponent *BottomTop= nullptr;
+	UPROPERTY(EditAnywhere, Category="Collide")
+	UStaticMeshComponent *TopBase= nullptr;
+	UPROPERTY(EditAnywhere, Category="Collide")
+	UStaticMeshComponent *TopTop= nullptr;
 public:
 	APipePair();
 	
