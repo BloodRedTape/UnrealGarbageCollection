@@ -5,6 +5,7 @@ AKillZone::AKillZone(){
 }
 
 void AKillZone::BeginPlay(){
+    Super::BeginPlay();
 	KillZone->OnComponentBeginOverlap.AddDynamic( this, &AKillZone::OnKillZoneEnter );
 }
 

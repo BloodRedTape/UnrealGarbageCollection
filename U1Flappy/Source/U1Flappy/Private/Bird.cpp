@@ -11,7 +11,7 @@ ABird::ABird(){
 
 void ABird::BeginPlay(){
 	Super::BeginPlay();
-	
+	Mesh->OnComponentBeginOverlap.AddDynamic( this, &ABird::OnOverlapBegin);
 }
 
 void ABird::Tick(float DeltaTime){
@@ -19,9 +19,9 @@ void ABird::Tick(float DeltaTime){
 
 	Velocity += Gravity * DeltaTime;
 
-	FVector Location = GetActorLocation();
-	Location.Z += Velocity;
-	SetActorLocation(Location);
+	Velocity = Velocity * bPhysicsEnabled;
+
+	SetActorLocation(GetActorLocation() + FVector(0.f, 0.f, Velocity));
 }
 
 void ABird::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent){
@@ -35,6 +35,13 @@ void ABird::AddForce(float Force){
 }
 
 void ABird::OnJump(){
+	bPhysicsEnabled = true;
+	
 	Velocity *= 0.5;
 	AddForce(JumpForce);
+}
+
+void ABird::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, 
+                         int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult ){
+	UE_LOG(LogTemp, Warning, TEXT("Overlapped"));
 }
