@@ -18,6 +18,11 @@ private:
 	FTimerHandle SpawnTimer;
 public:
 	virtual void BeginPlay() override;
+	
+private:
+	void OnInGameEnter();
+
+	void OnPostGameEnter();
 
 	void SpawnPair();
 };

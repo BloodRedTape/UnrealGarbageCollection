@@ -3,6 +3,7 @@
 #include <type_traits>
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Components/BoxComponent.h"
 #include "PipePair.generated.h"
 
 UCLASS()
@@ -34,6 +35,9 @@ private:
 	UStaticMeshComponent *TopBase= nullptr;
 	UPROPERTY(EditAnywhere, Category="Collide")
 	UStaticMeshComponent *TopTop= nullptr;
+
+	UPROPERTY(EditAnywhere, Category="Collide")
+	UBoxComponent *Hole = nullptr;
 public:
 	APipePair();
 	
@@ -54,4 +58,10 @@ public:
 		Component->AttachToComponent(AttachTo, FAttachmentTransformRules::KeepRelativeTransform);
 		return Component;
 	}
+
+	void OnPostGameEnter();
+
+	UFUNCTION()
+	void OnPipeHoleEnter(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, 
+                         int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult );
 };

@@ -1,4 +1,5 @@
 #include "PipePair.h"
+#include "PlayingGameState.h"
 
 APipePair::APipePair(){
 	PrimaryActorTick.bCanEverTick = true;
@@ -7,6 +8,8 @@ APipePair::APipePair(){
 
 void APipePair::BeginPlay(){
 	Super::BeginPlay();
+
+	APlayingGameState::Get().OnPostGameEnter.AddUObject(this, &APipePair::OnPostGameEnter);
 
 	FBox PipeBaseBox = PipeBase->GetBoundingBox();
 	FVector PipeBaseSize = PipeBaseBox.Max - PipeBaseBox.Min;
@@ -48,6 +51,14 @@ void APipePair::BeginPlay(){
 	TopBase->SetStaticMesh(PipeBase);
 
 	TopBase->SetCollisionProfileName(TEXT("OverlapAll"));
+
+	Hole = AddSceneComponent<UBoxComponent>(RootComponent);
+	Hole->SetRelativeLocation({0.f, 0.f, HoleOffset});
+	Hole->SetBoxExtent({20.0f, 20.0f, HoleSize});
+
+	Hole->SetCollisionProfileName(TEXT("OverlapAll"));
+
+	Hole->OnComponentBeginOverlap.AddDynamic(this, &APipePair::OnPipeHoleEnter);
 }
 
 void APipePair::Tick(float DeltaTime){
@@ -60,3 +71,12 @@ void APipePair::Tick(float DeltaTime){
 	SetActorLocation(Location);
 }
 
+void APipePair::OnPostGameEnter() {
+	PrimaryActorTick.SetTickFunctionEnable(false);
+}
+
+void APipePair::OnPipeHoleEnter(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
+	int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) {
+
+	APlayingGameState::Get().IncrementScore();
+}
