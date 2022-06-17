@@ -3,6 +3,7 @@
 #include "CoreMinimal.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/Character.h"
+#include "Inventory.h"
 #include "FirstPersonCharacter.generated.h"
 
 UCLASS()
@@ -11,6 +12,8 @@ class SHOOTER_API AFirstPersonCharacter : public ACharacter{
 private:
 	UPROPERTY(EditAnywhere, Category="FirstPersonCharacter")
 	UCameraComponent *Camera;
+public:
+	FInventory Inventory;
 public:
 	AFirstPersonCharacter();
 
@@ -27,4 +30,8 @@ public:
 	void MoveRight(float Value);
 
 	void MovePitch(float Value);
+
+	USceneComponent *GetPlayerViewComponent()const{ return Camera; }
+
+	void AddAmmo(int Count);
 };
