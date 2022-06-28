@@ -1,5 +1,9 @@
 ﻿#include "FirstPersonCharacter.h"
 
+#include "Kismet/GameplayStatics.h"
+#include "Shooter/UI/InGame/InGameOverlay.h"
+
+
 AFirstPersonCharacter::AFirstPersonCharacter(){
 	PrimaryActorTick.bCanEverTick = true;
 	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("PlayerViewCamera"));
@@ -14,10 +18,18 @@ void AFirstPersonCharacter::PostActorCreated(){
 
 void AFirstPersonCharacter::BeginPlay(){
 	Super::BeginPlay();
+
+	if(InGameOverlayClass)
+	{
+		InGameOverlay = CreateWidget<UInGameOverlay>(GetController<APlayerController>(), InGameOverlayClass);
+		InGameOverlay->AddToPlayerScreen();
+	}
 }
 
 void AFirstPersonCharacter::Tick(float DeltaTime){
 	Super::Tick(DeltaTime);
+
+	InGameOverlay->SetAmmoCount(Inventory.Ammo);
 }
 
 void AFirstPersonCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent){
@@ -41,3 +53,8 @@ void AFirstPersonCharacter::MoveRight(float Value){
 void AFirstPersonCharacter::MovePitch(float Value){
 	Camera->SetRelativeRotation(Camera->GetRelativeRotation() + FRotator(Value, 0, 0));
 }
+
+void AFirstPersonCharacter::AddAmmo(int Count){
+	
+}
+

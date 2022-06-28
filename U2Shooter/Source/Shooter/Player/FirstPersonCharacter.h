@@ -12,6 +12,12 @@ class SHOOTER_API AFirstPersonCharacter : public ACharacter{
 private:
 	UPROPERTY(EditAnywhere, Category="FirstPersonCharacter")
 	UCameraComponent *Camera;
+	
+	UPROPERTY(EditAnywhere, Category="UI")
+	TSubclassOf<class UInGameOverlay> InGameOverlayClass;
+	
+	UPROPERTY(EditAnywhere, Category="UI")
+	UInGameOverlay *InGameOverlay;
 public:
 	FInventory Inventory;
 public:
