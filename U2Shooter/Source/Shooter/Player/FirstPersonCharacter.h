@@ -19,6 +19,8 @@ private:
 	
 	UPROPERTY(EditAnywhere, Category="UI")
 	UInGameOverlay *InGameOverlay;
+	UPROPERTY(EditAnywhere, Category="Inventory")
+	AItem *CurrentItem = nullptr;
 public:
 	FInventory Inventory;
 public:
