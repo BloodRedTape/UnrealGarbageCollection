@@ -11,6 +11,4 @@ AAmmo::AAmmo(){
 
 void AAmmo::OnPick(AFirstPersonCharacter* Character){
 	Character->Inventory.Ammo++;
-
-	Destroy();
 }

@@ -4,6 +4,7 @@
 #include "Camera/CameraComponent.h"
 #include "GameFramework/Character.h"
 #include "Inventory.h"
+#include "Shooter/Items/Item.h"
 #include "FirstPersonCharacter.generated.h"
 
 UCLASS()
@@ -37,7 +38,7 @@ public:
 
 	void MovePitch(float Value);
 
-	USceneComponent *GetPlayerViewComponent()const{ return Camera; }
+	void PickItem(AItem *Item);
 
-	void AddAmmo(int Count);
+	void UseItem();
 };

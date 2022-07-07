@@ -22,5 +22,7 @@ void UPickableItemComponent::OnBeginOverlap(UPrimitiveComponent* OverlappedCompo
 
 	OnPick.ExecuteIfBound(Character);
 	UE_LOG(LogPickableItem, Display, TEXT("call OnPick"));
+
+	GetOwner()->Destroy();
 }
 

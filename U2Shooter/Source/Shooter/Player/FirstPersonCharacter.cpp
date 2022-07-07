@@ -40,6 +40,7 @@ void AFirstPersonCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInp
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
 	PlayerInputComponent->BindAxis("Yaw", this, &AFirstPersonCharacter::AddControllerYawInput);
 	PlayerInputComponent->BindAxis("Pitch", this, &AFirstPersonCharacter::AddControllerPitchInput);
+	PlayerInputComponent->BindAction("UseItem", IE_Pressed, this, &AFirstPersonCharacter::UseItem);
 }
 
 void AFirstPersonCharacter::MoveForward(float Value){
@@ -54,7 +55,13 @@ void AFirstPersonCharacter::MovePitch(float Value){
 	Camera->SetRelativeRotation(Camera->GetRelativeRotation() + FRotator(Value, 0, 0));
 }
 
-void AFirstPersonCharacter::AddAmmo(int Count){
-	
+void AFirstPersonCharacter::PickItem(AItem* Item){
+	check(Item);
+	check(Camera);
+	Item->AttachToPlayerView(Camera);
+}
+
+void AFirstPersonCharacter::UseItem(){
+	CurrentItem->Use();
 }
 

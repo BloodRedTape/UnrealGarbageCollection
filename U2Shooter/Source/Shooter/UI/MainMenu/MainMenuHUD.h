@@ -12,5 +12,7 @@ private:
 	UPROPERTY(EditAnywhere, Category="UI")
 	TSubclassOf<UMainMenu> MainMenuClass;	
 public:
-	void BeginPlay() override;	
+	void BeginPlay() override;
+
+	void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 };
